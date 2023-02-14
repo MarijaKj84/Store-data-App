@@ -10,7 +10,6 @@
     <?php
         // The MySQL service named in the docker-compose.yml.
         $host = 'db';
-        $host1 = 'novo';
         // Database use name
         $user = 'MYSQL_USER';
         //database user password
