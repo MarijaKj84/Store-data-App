@@ -1,3 +1,3 @@
 FROM mysql
-WORKDIR /mysql
+WORKDIR /db
 EXPOSE 3306
