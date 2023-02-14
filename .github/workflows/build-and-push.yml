@@ -1,4 +1,4 @@
-name: Build and push dockerhub
+name: Build and push to DockerHub
 
 on:
   push:
@@ -6,38 +6,44 @@ on:
     
 jobs:
   build:
+    name: Build Image
     runs-on: ubuntu-latest
+    
     steps:
-      - 
+    
+      - name: Check out code
         uses: actions/checkout@v2
-      -
-          name: Login to DockerHub
-          uses: docker/login-action@v1
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_PASS }}
-      - 
-        name: test
+        
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+          
+      - name: test
         run: |      
           pwd
-      - 
-        name: Docker build App-php
+          
+      - name: Docker build App-php
         run: |      
           docker build ./php -t mkjoseva/devops-php
-      - 
-        name: Docker build MySQL
+          
+      - name: Docker build MySQL
         run: | 
           docker build ./db -t mkjoseva/devops-msql
-      - 
-        name: Docker build PHPMyAdmin
+          
+      - name: Docker build PHPMyAdmin
         run: |      
           docker build ./phpmyadmin -t mkjoseva/devops-phpmyadmin
+          
       - name: Docker push App-php
         run: |      
           docker push mkjoseva/devops-php
+          
       - name: Docker push MySQL
         run: | 
           docker push mkjoseva/devops-msql
+          
       - name: Docker push PHPMyAdmin
         run: |      
           docker push mkjoseva/devops-phpmyadmin
