@@ -23,17 +23,6 @@
         } else {
             echo "Connected to MySQL server/database successfully!\n";
         }
-    /*// servername => localhost
-    // username => root
-    // password => empty
-    // database name => staff
-    $conn = mysqli_connect("localhost", "root", "", "staff");
-
-    // Check connection
-    if($conn === false){
-        die("ERROR: Could not connect. "
-            . mysqli_connect_error());
-    }*/
 
         // Taking all 5 values from the form data(input)
         $first_name =  $_REQUEST['first_name'];
@@ -42,6 +31,7 @@
         $address = $_REQUEST['address'];
         $email = $_REQUEST['email'];
 
+        //Check if there are Tables in database
         $sql = "SHOW TABLES IN `MYSQL_DATABASE`";
         $result = $conn->query($sql);
         if($result !== false) {
@@ -53,7 +43,7 @@
             }
         }
         else {
-            echo 'There is no table in "MYSQL_DATABASE"';
+            echo 'There is no tables in "MYSQL_DATABASE"';
             $sql = "CREATE TABLE College (firstname VARCHAR(30) NOT NULL, lastname VARCHAR(30) NOT NULL,
                     gender VARCHAR(50), address VARCHAR(100), email VARCHAR(50))";
             if ($conn->query($sql) === TRUE) {
@@ -63,21 +53,21 @@
             }
         }
     }
-    else echo 'Unable to check the "tests", error - '. $conn->error;
+    else 
+        echo 'Unable to check the "MYSQL_DATABASE", error - '. $conn->error;
 
-        // Performing insert query execution
-    // here our table name is college
-    $sql = "INSERT INTO College  VALUES ('$first_name','$last_name','$gender','$address','$email')";
+    // Performing insert query execution
+    $sql = "INSERT INTO College VALUES ('$first_name','$last_name','$gender','$address','$email')";
 
     if(mysqli_query($conn, $sql)){
-        echo "<h3>data stored in a database successfully."
+        echo "<h3>Data stored in a database successfully."
             . " Please browse your localhost php my admin"
             . " to view the updated data</h3>";
 
         echo nl2br("\n$first_name\n $last_name\n "
             . "$gender\n $address\n $email");
     } else{
-        echo "ERROR: Hush! Sorry $sql. "
+        echo "ERROR: Sorry $sql. "
             . mysqli_error($conn);
     }
     // Close connection
