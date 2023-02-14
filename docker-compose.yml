@@ -2,9 +2,7 @@ version: '3.8'
 services:
   php-apache-environment:
     container_name: php-apache
-    build:
-      context: ./php
-      dockerfile: Dockerfile
+    build: ./php
     depends_on:
       - db
     volumes:
@@ -13,7 +11,7 @@ services:
       - 8000:80
   db:
     container_name: db
-    image: mysql
+    build: ./db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
@@ -23,7 +21,7 @@ services:
     ports:
       - "9906:3306"
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    build: ./phpmyadmin
     ports:
       - '8082:80'
     restart: always
