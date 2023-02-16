@@ -74,4 +74,3 @@ jobs:
             helm upgrade --install php-deploy php-deploy
             helm upgrade --install phpmyadmin-deploy phpmyadmin-deploy
             helm upgrade --install db-deploy db-deploy
-            kubectl rollout restart deployment backend-deployment
