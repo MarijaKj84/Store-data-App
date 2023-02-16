@@ -5,7 +5,7 @@ scrape_configs:
   - job_name: 'apache-exporter'
     scrape_interval: 5s
     static_configs:
-      - targets: ['7934e86e059c:9117']
+      - targets: ['f1ade9b0536b:9117']
 
   - job_name: 'prometheus'
     scrape_interval: 5s
