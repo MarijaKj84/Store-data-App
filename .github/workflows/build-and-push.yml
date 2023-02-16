@@ -1,4 +1,4 @@
-name: Build and push to DockerHub
+name: Build, deploy and push to DockerHub
 
 on:
   push:
@@ -47,4 +47,19 @@ jobs:
       - name: Docker push PHPMyAdmin
         run: |      
           docker push mkjoseva/devops-phpmyadmin
+          
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
       
+      - name: Deploy
+        run: |
+            cd ../Store-data-App
+            git pull
+            cd Kubernetes
+            helm upgrade --install php-deploy php-deploy
+            helm upgrade --install phpmyadmin-deploy phpmyadmin-deploy
+            helm upgrade --install db-deploy db-deploy
+            kubectl rollout restart deployment backend-deployment
