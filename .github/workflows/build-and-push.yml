@@ -54,8 +54,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - name: Install minikube
+        run: | 
+            sudo apt update -y
+            sudo apt upgrade -y
+            sudo apt install -y curl wget apt-transport-https
+            sudo wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+            sudo chmod +x /usr/local/bin/minikube
+            sudo echo "Installed minikube version: $(minikube version)"
+      
       - name: Deploy
         run: |
+            minikube start
+            eval $(minikube docker-env)
             cd ../Store-data-App
             git pull
             cd Kubernetes
